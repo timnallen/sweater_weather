@@ -1,0 +1,2 @@
+class CoordinateQuery < ApplicationRecord
+end
