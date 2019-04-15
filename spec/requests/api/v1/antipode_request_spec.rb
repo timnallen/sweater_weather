@@ -6,7 +6,7 @@ describe 'Antipode API' do
 
     expect(response).to be_successful
     response_body = JSON.parse(response.body, symbolize_names: true)[:data]
-    binding.pry
+
     expect(response_body).to be_a(Array)
     expect(response_body[0]).to be_a(Hash)
     expect(response_body[0][:id]).to be_a(String)
