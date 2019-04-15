@@ -16,7 +16,7 @@ class ApplicationService
   def conn(header_key = false)
     if header_key
       Faraday.new(url: @domain_name) do |faraday|
-        faraday.headers[:api_key] = ENV['AMYPODE_KEY']
+        faraday.headers[:api_key] = header_key
         faraday.adapter Faraday.default_adapter
       end
     else

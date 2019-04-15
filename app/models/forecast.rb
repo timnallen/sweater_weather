@@ -1,13 +1,20 @@
-class LocationFormatter
-  def format_location(coordinate_query, forecast_data)
-    {
-      location: coordinate_query.location_name,
-      country: coordinate_query.country,
-      time: Time.at(forecast_data[:currently][:time]),
-      current_weather_info: current_weather_info(forecast_data),
-      hourly_data: hourly_data(forecast_data[:hourly]),
-      daily_data: daily_data(forecast_data[:daily])
-    }
+class Forecast
+  attr_reader :location,
+              :country,
+              :time,
+              :current_weather,
+              :hourly_forecasts,
+              :daily_forecasts,
+              :id
+
+  def initialize(coordinate_query, forecast_data)
+    @location = coordinate_query.location_name
+    @country = coordinate_query.country
+    @time = Time.at(forecast_data[:currently][:time])
+    @current_weather = current_weather_info(forecast_data)
+    @hourly_forecasts = hourly_data(forecast_data[:hourly])
+    @daily_forecasts = daily_data(forecast_data[:daily])
+    @id = "#{@location} at #{@time}"
   end
 
   private

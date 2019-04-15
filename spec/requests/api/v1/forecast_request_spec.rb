@@ -5,14 +5,14 @@ describe 'Forecast API' do
     get '/api/v1/forecast?location=denver,co'
 
     expect(response).to be_successful
-    response_body = JSON.parse(response.body, symbolize_names: true)
+    response_body = JSON.parse(response.body, symbolize_names: true)[:data]
 
     expect(response_body).to be_a(Hash)
-    expect(response_body[:location]).to be_a(String)
-    expect(response_body[:country]).to be_a(String)
-    expect(response_body[:time]).to be_a(String)
-    expect(response_body[:current_weather_info]).to be_a(Hash)
-    expect(response_body[:hourly_data]).to be_a(Array)
-    expect(response_body[:daily_data]).to be_a(Array)
+    expect(response_body[:attributes][:location]).to be_a(String)
+    expect(response_body[:attributes][:country]).to be_a(String)
+    expect(response_body[:attributes][:time]).to be_a(String)
+    expect(response_body[:attributes][:current_weather]).to be_a(Hash)
+    expect(response_body[:attributes][:hourly_forecasts]).to be_a(Array)
+    expect(response_body[:attributes][:daily_forecasts]).to be_a(Array)
   end
 end
