@@ -1,4 +1,6 @@
 class ApplicationService
+  attr_reader :domain_name
+
   def initialize(domain_name)
     @domain_name = domain_name
   end
@@ -8,7 +10,8 @@ class ApplicationService
   end
 
   def get_response(url, header_key = false)
-    conn(header_key).get(url)
+    test = conn(header_key).get(url)
+    binding.pry
   end
 
   def conn(header_key = false)
