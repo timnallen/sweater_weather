@@ -2,9 +2,8 @@ class AntipodeService < ApplicationService
   def self.get_antipode_data(search_location)
     coordinate_query = geocoding_service.find_lat_and_long(search_location)
     antipode_coordinate_data = amypode_service.get_antipode(coordinate_query)
-    antipode_coordinate_query = geocoding_service.search_location_by_coordinates(antipode_coordinate_data)
-    binding.pry
-    forecast_data = dark_sky_service.get_forecast()# get the forecast hash with summary and current temperature
+    location_name = geocoding_service.search_location_by_coordinates(antipode_coordinate_data)
+    forecast_data = dark_sky_service.get_forecast(antipode_coordinate_data)
     AntipodeFormatter.format(antipode_coordinate_data, location_name, forecast_data, coordinate_query)
   end
 
