@@ -1,14 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe AntipodeService do
-  describe 'class methods' do
-    it '::get_antipode_data' do
+RSpec.describe GeocodingService do
+  describe 'instance methods' do
+    it '#find_lat_and_long' do
       location = 'hongkong'
-      response = AntipodeService.get_antipode_data(location)
-      expect(response).to be_a(Hash)
-      expect(response[:data]).to be_a(Array)
-      expect(response[:data][0]).to be_a(Hash)
-      expect(response[:data][0][:search_location]).to eq('Hong Kong')
+    end
+
+    it '#search_location_by_coordinates' do
+      service = GeocodingService.new('https://maps.googleapis.com')
+      coordinate_data = {data: {}}
+      coordinate_data[:data][:attributes] = {
+        lat: -22.0,
+        long: -66.0
+      }
+      expect(service.search_location_by_coordinates(coordinate_data)).to eq('Santa Catalina')
     end
   end
 end

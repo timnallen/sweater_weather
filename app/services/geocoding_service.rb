@@ -3,6 +3,7 @@ class GeocodingService < ApplicationService
     coordinate_query = CoordinateQuery.find_by(query: location)
     return coordinate_query if coordinate_query
     add_location_to_db(location)
+    binding.pry
   end
 
   def search_location_by_coordinates(coordinate_data)

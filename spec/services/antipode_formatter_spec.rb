@@ -25,10 +25,20 @@ RSpec.describe AntipodeFormatter do
       expected = {
         data: [
           {
-            id: '1'
+            id: '1',
+            type: 'antipode',
+            attributes: {
+              location_name: location_name,
+              forecast: {
+                summary: 'fake',
+                current_temperature: '1'
+              }
+            },
+            search_location: 'Hong Kong'
           }
         ]
       }
+      expect(actual).to eq(expected)
     end
   end
 end
