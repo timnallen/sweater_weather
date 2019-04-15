@@ -10,8 +10,7 @@ class ApplicationService
   end
 
   def get_response(url, header_key = false)
-    test = conn(header_key).get(url)
-    binding.pry
+    conn(header_key).get(url)
   end
 
   def conn(header_key = false)

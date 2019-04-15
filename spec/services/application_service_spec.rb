@@ -15,11 +15,17 @@ describe ApplicationService do
 
   describe 'instance methods' do
     it 'conn' do
-      expect(@service.conn).to be_a(Faraday)
+      expect(@service.conn).to be_a(Faraday::Connection)
     end
 
     it 'get_response' do
-      expect(@service.get_response())
+      response = @service.get_response("/forecast/#{ENV['DARKSKY_API_KEY']}/-22.0,-66.0")
+      expect(response).to be_a(Faraday::Response)
+    end
+
+    it 'get_json' do
+      response = @service.get_json("/forecast/#{ENV['DARKSKY_API_KEY']}/-22.0,-66.0")
+      expect(response).to be_a(Hash)
     end
   end
 end
