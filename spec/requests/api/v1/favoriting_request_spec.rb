@@ -8,17 +8,23 @@ describe 'user can favorite' do
       password_confirmation: '1',
       api_key: 'api_key'
     )
-  end
-
-  it 'allows a user to select a favorite' do
-    cq = CoordinateQuery.create(
+    @cq = CoordinateQuery.create(
       query: 'Denver, CO',
       location_name: 'Denver, CO',
       latitude: 39.7,
       longitude: 104.9
     )
+  end
+
+  it 'allows a user to select a favorite' do
+    cq_1 = CoordinateQuery.create(
+      query: 'Fort Collins, CO',
+      location_name: 'Fort Collins, CO',
+      latitude: 40.5,
+      longitude: 105.1
+    )
     body = {
-      location: cq.location_name,
+      location: cq_1.location_name,
       api_key: @user.api_key
     }
     post '/api/v1/favorites', params: body
@@ -29,16 +35,31 @@ describe 'user can favorite' do
     expect(response.code).to eq('201')
 
     expect(ucq.user).to eq(@user)
-    expect(ucq.coordinate_query).to eq(cq)
+    expect(ucq.coordinate_query).to eq(cq_1)
   end
 
   it 'wont allow a favorite with a bad api_key' do
     body = {
-      location: 'Denver, CO',
+      location: 'Fort Collins, CO',
       api_key: ''
     }
     post '/api/v1/favorites', params: body
 
     expect(response.code).to eq('401')
+  end
+
+  it 'returns a list of favorites' do
+    body = {
+      api_key: @user.api_key
+    }
+    get '/api/v1/favorites', params: body
+
+    expect(response).to be_successful
+    expect(response.code).to eq('200')
+    response_body = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response_body).to be_a(Array)
+    expect(response_body[0]).to be_a(Hash)
+    expect(response_body[0].keys).to eq([:location, :current_weather])
   end
 end
