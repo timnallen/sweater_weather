@@ -4,7 +4,7 @@ RSpec.describe LocationFacade do
   describe 'instance methods' do
     it '#get_forecast_for_location' do
       location = 'denver,co'
-      response = LocationFacade.new.get_forecast_for_location(location)
+      response = LocationFacade.new(location).get_forecast_for_location
       expect(response).to be_a(Forecast)
       expect(response.location).to include('Denver')
       expect(response.current_weather).to be_a(Hash)

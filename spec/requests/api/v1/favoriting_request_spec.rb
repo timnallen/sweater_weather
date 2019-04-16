@@ -14,6 +14,7 @@ describe 'user can favorite' do
       latitude: 39.7,
       longitude: 104.9
     )
+    UserCoordinateQuery.create(user: @user, coordinate_query: @cq)
   end
 
   it 'allows a user to select a favorite' do
@@ -56,10 +57,19 @@ describe 'user can favorite' do
 
     expect(response).to be_successful
     expect(response.code).to eq('200')
-    response_body = JSON.parse(response.body, symbolize_names: true)
+    response_body = JSON.parse(response.body, symbolize_names: true)[:data]
 
     expect(response_body).to be_a(Array)
     expect(response_body[0]).to be_a(Hash)
-    expect(response_body[0].keys).to eq([:location, :current_weather])
+    expect(response_body[0][:attributes].keys).to eq([:location, :current_weather])
+  end
+
+  it 'will send a 401 with no api key' do
+    body = {
+      api_key: ''
+    }
+    get '/api/v1/favorites', params: body
+
+    expect(response.code).to eq('401')
   end
 end
