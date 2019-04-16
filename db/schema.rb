@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_16_161659) do
+ActiveRecord::Schema.define(version: 2019_04_16_181715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,13 @@ ActiveRecord::Schema.define(version: 2019_04_16_161659) do
     t.string "country"
   end
 
+  create_table "user_coordinate_queries", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "coordinate_query_id"
+    t.index ["coordinate_query_id"], name: "index_user_coordinate_queries_on_coordinate_query_id"
+    t.index ["user_id"], name: "index_user_coordinate_queries_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
@@ -33,4 +40,6 @@ ActiveRecord::Schema.define(version: 2019_04_16_161659) do
     t.string "api_key"
   end
 
+  add_foreign_key "user_coordinate_queries", "coordinate_queries"
+  add_foreign_key "user_coordinate_queries", "users"
 end

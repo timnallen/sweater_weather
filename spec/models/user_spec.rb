@@ -6,4 +6,9 @@ describe User, type: :model do
     it { should validate_uniqueness_of :email }
     it { should have_secure_password }
   end
+
+  describe 'relationships' do
+    it { should have_many :user_coordinate_queries }
+    it { should have_many :coordinate_queries }
+  end
 end
