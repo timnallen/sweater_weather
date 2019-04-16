@@ -1,11 +1,18 @@
 class DarkSkyService < ApplicationService
-  def get_forecast(coordinate_query)
-    get_json("/forecast/#{authenticate!}/#{request_formatter(coordinate_query)}")
+  def initialize(coordinate_query)
+    @coordinate_query = coordinate_query
+    @domain_name = 'https://api.darksky.net'
+  end
+
+  def get_forecast
+    get_json("/forecast/#{authenticate!}/#{request_formatter}")
   end
 
   private
 
-  def request_formatter(coordinate_query)
+  attr_reader :coordinate_query
+
+  def request_formatter
     if coordinate_query.class == CoordinateQuery
       "#{coordinate_query.latitude},#{coordinate_query.longitude}"
     else

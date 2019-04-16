@@ -12,7 +12,7 @@ class AntipodeFacade
   attr_reader :search_location
 
   def forecast_data
-    @forecast_data ||= dark_sky_service.get_forecast(antipode_coordinate_data)
+    @forecast_data ||= dark_sky_service.get_forecast
   end
 
   def location_name
@@ -36,6 +36,6 @@ class AntipodeFacade
   end
 
   def dark_sky_service
-    DarkSkyService.new('https://api.darksky.net')
+    DarkSkyService.new(search_location_coordinates)
   end
 end

@@ -7,8 +7,8 @@ describe Antipode, type: :model do
     amypode_service = AmypodeService.new('http://amypode.herokuapp.com')
     antipode_coordinate_data = amypode_service.get_antipode(search_location_coordinates)
     location_name = geocoding_service.search_location_by_coordinates(antipode_coordinate_data)
-    dark_sky_service = DarkSkyService.new('https://api.darksky.net')
-    forecast_data = dark_sky_service.get_forecast(antipode_coordinate_data)
+    dark_sky_service = DarkSkyService.new(search_location_coordinates)
+    forecast_data = dark_sky_service.get_forecast
     antipode = Antipode.new(antipode_coordinate_data, location_name, forecast_data, search_location_coordinates)
     expect(antipode).to be_a(Antipode)
     expect(antipode.location_name).to be_a(String)

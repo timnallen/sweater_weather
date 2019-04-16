@@ -9,7 +9,7 @@ describe Forecast, type: :model do
       location_name: "Denver, CO, USA",
       country: "United States"
     )
-    forecast_data = DarkSkyService.new('https://api.darksky.net').get_forecast(coordinate_query)
+    forecast_data = DarkSkyService.new(coordinate_query).get_forecast
     forecast = Forecast.new(coordinate_query, forecast_data)
     expect(forecast).to be_a(Forecast)
     expect(forecast.location).to include("Denver, CO")
