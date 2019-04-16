@@ -5,7 +5,7 @@ class Antipode
               :search_location
 
   def initialize(antipode_coordinate_data, location_name, forecast_data, search_location_coordinates)
-    @id = antipode_coordinate_data[:id]
+    @id = antipode_coordinate_data[:data][:id]
     @location_name = location_name
     @forecast = forecast_data(forecast_data)
     @search_location = search_location_coordinates.location_name

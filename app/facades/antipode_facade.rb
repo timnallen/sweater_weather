@@ -4,7 +4,7 @@ class AntipodeFacade
     antipode_coordinate_data = amypode_service.get_antipode(search_location_coordinates)
     location_name = geocoding_service.search_location_by_coordinates(antipode_coordinate_data)
     forecast_data = dark_sky_service.get_forecast(antipode_coordinate_data)
-    Antipode.new(antipode_coordinate_data, location_name, forecast_data, search_location)
+    Antipode.new(antipode_coordinate_data, location_name, forecast_data, search_location_coordinates)
   end
 
   private

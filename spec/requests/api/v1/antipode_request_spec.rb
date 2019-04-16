@@ -14,6 +14,6 @@ describe 'Antipode API' do
     expect(response_body[0][:attributes]).to be_a(Hash)
     expect(response_body[0][:attributes][:location_name]).to be_a(String)
     expect(response_body[0][:attributes][:forecast]).to be_a(Hash)
-    expect(response_body[0][:search_location]).to eq('Hong Kong')
+    expect(response_body[0][:attributes][:search_location]).to eq('Hong Kong')
   end
 end

@@ -18,7 +18,7 @@ RSpec.describe GeocodingService do
         lat: -22.0,
         long: -66.0
       }
-      expect(@service.search_location_by_coordinates(coordinate_data)).to eq('Santa Catalina')
+      expect(@service.search_location_by_coordinates(coordinate_data)).to eq('Ruta Provincial 5')
     end
   end
 end
