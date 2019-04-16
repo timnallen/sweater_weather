@@ -4,6 +4,7 @@ class Api::V1::FavoritesController < ApplicationController
     if user
       cq = CoordinateQuery.find_by(location_name: favorite_params[:location])
       UserCoordinateQuery.create(user: user, coordinate_query: cq)
+      render json: {}, status: 201
     else
       render json: {}, status: 401
     end
