@@ -10,6 +10,7 @@ describe 'User can create an account' do
     post '/api/v1/users', params: data
 
     expect(response).to be_successful
+    expect(response.code).to eq('201')
     response_body = JSON.parse(response.body, symbolize_names: true)
     expect(response_body.keys).to eq([:api_key])
     expect(response_body[:api_key]).to be_a(String)
