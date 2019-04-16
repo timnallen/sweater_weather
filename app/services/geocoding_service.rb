@@ -9,7 +9,8 @@ class GeocodingService < ApplicationService
     lat = coordinate_data[:data][:attributes][:lat].to_s
     long = coordinate_data[:data][:attributes][:long].to_s
     latlng = lat + ', ' + long
-    geocode_coordinate_response(latlng)[:results][0][:address_components][1][:long_name]
+    response = geocode_coordinate_response(latlng)
+    response[:results][0][:address_components][0][:long_name]
   end
 
   private
