@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
       KeyGenerator.new(user)
       render json: {api_key: user.api_key}, status: 201
     else
-      render json: {}, status: 401
+      four_oh_one
     end
   end
 

@@ -72,4 +72,33 @@ describe 'user can favorite' do
 
     expect(response.code).to eq('401')
   end
+
+  it 'allows users to delete favorites' do
+    body = {
+      location: @cq.location_name,
+      api_key: @user.api_key
+    }
+
+    delete '/api/v1/favorites', params: body
+
+    expect(response).to be_successful
+    expect(response.code).to eq('200')
+    response_body = JSON.parse(response.body, symbolize_names: true)[:data]
+
+    expect(response_body).to be_a(Hash)
+    expect(response_body[:attributes].keys).to eq([:location, :current_weather])
+
+    expect(@user.coordinate_queries).to_not include(@cq)
+  end
+
+  it 'doesnt allow users to delete without an api key' do
+    body = {
+      location: @cq.location_name,
+      api_key: ''
+    }
+
+    delete '/api/v1/favorites', params: body
+
+    expect(response.code).to eq('401')
+  end
 end
