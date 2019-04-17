@@ -1,4 +1,6 @@
 class LocationFacade
+  attr_reader :location
+
   def initialize(location)
     @location = geocoding_service.find_lat_and_long(location)
   end
@@ -11,8 +13,6 @@ class LocationFacade
   end
 
   private
-
-  attr_reader :location
 
   def geocoding_service
     GeocodingService.new('https://maps.googleapis.com')

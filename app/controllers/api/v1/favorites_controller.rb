@@ -29,7 +29,7 @@ class Api::V1::FavoritesController < ApplicationController
   private
 
   def location
-    @location ||= Location.find_by(location_name: favorite_params[:location])
+    @location ||= LocationFacade.new(favorite_params[:location]).location
   end
 
   def user
