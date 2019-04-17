@@ -1,8 +1,8 @@
 class GeocodingService < ApplicationService
-  def find_lat_and_long(location)
-    coordinate_query = CoordinateQuery.find_by(query: location)
-    return coordinate_query if coordinate_query
-    add_location_to_db(location)
+  def find_lat_and_long(search_location)
+    location = Location.find_by(search_location: search_location)
+    return location if location
+    add_location_to_db(search_location)
   end
 
   def search_location_by_coordinates(coordinate_data)
@@ -19,17 +19,17 @@ class GeocodingService < ApplicationService
     @response ||= get_json("/maps/api/geocode/json?latlng=#{latlng}#{authenticate!}")
   end
 
-  def add_location_to_db(location)
-    response = geocode_location_response(location)
-    CoordinateQuery.create(query: location,
+  def add_location_to_db(search_location)
+    response = geocode_location_response(search_location)
+    Location.create(search_location: search_location,
       location_name: formatted_address(response),
       country: country(response),
       latitude: coordinates(response)[:lat],
       longitude: coordinates(response)[:lng])
   end
 
-  def geocode_location_response(location)
-    @response ||= get_json("/maps/api/geocode/json?address=#{location}#{authenticate!}")
+  def geocode_location_response(search_location)
+    @response ||= get_json("/maps/api/geocode/json?address=#{search_location}#{authenticate!}")
   end
 
   def authenticate!

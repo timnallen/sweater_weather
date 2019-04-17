@@ -8,7 +8,7 @@ describe User, type: :model do
   end
 
   describe 'relationships' do
-    it { should have_many :user_coordinate_queries }
-    it { should have_many :coordinate_queries }
+    it { should have_many :user_locations }
+    it { should have_many :locations }
   end
 end

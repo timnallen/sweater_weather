@@ -2,15 +2,15 @@ require 'rails_helper'
 
 describe Forecast, type: :model do
   it 'it exists and has attributes' do
-    coordinate_query = CoordinateQuery.create(
+    location = Location.create(
       latitude: 39.7392358,
       longitude: -104.990251,
-      query: "denver,co",
+      search_location: "denver,co",
       location_name: "Denver, CO, USA",
       country: "United States"
     )
-    forecast_data = DarkSkyService.new(coordinate_query).get_forecast
-    forecast = Forecast.new(coordinate_query, forecast_data)
+    forecast_data = DarkSkyService.new(location).get_forecast
+    forecast = Forecast.new(location, forecast_data)
     expect(forecast).to be_a(Forecast)
     expect(forecast.location).to include("Denver, CO")
     expect(forecast.country).to eq("United States")

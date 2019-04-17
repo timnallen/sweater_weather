@@ -8,8 +8,8 @@ RSpec.describe GeocodingService do
 
     it '#find_lat_and_long' do
       location = 'hongkong'
-      expect(@service.find_lat_and_long(location)).to be_a(CoordinateQuery)
-      expect(@service.find_lat_and_long(location).query).to eq('hongkong')
+      expect(@service.find_lat_and_long(location)).to be_a(Location)
+      expect(@service.find_lat_and_long(location).search_location).to eq('hongkong')
     end
 
     it '#search_location_by_coordinates' do

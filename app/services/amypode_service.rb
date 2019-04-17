@@ -1,7 +1,7 @@
 class AmypodeService < ApplicationService
-  def get_antipode(coordinate_query)
-    lat = coordinate_query.latitude.to_i
-    long = coordinate_query.longitude.to_i
+  def get_antipode(location)
+    lat = location.latitude.to_i
+    long = location.longitude.to_i
     get_json("/api/v1/antipodes?lat=#{lat}&long=#{long}", authenticate!)
   end
 

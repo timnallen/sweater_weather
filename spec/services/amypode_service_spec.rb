@@ -4,7 +4,7 @@ RSpec.describe AmypodeService do
   describe 'instance methods' do
     it '#get_antipode' do
       service = AmypodeService.new('http://amypode.herokuapp.com')
-      coordinate_query = CoordinateQuery.create(
+      location = Location.create(
         latitude: 22.3193039,
         longitude: 114.1693611
       )
@@ -18,7 +18,7 @@ RSpec.describe AmypodeService do
             }
           }
         }
-      expect(service.get_antipode(coordinate_query)).to eq(expected)
+      expect(service.get_antipode(location)).to eq(expected)
     end
   end
 end
