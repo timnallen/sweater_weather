@@ -4,8 +4,10 @@ class BackgroundFacade
   end
 
   def get_location_background
-    background_data = service.get_background(search_location)
-    Background.new(background_data)
+    Rails.cache.fetch("Background/#{search_location}", expires_in: 1.week) do
+      background_data = service.get_background(search_location)
+      Background.new(background_data)
+    end
   end
 
   private

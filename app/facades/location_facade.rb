@@ -4,8 +4,10 @@ class LocationFacade
   end
 
   def get_forecast_for_location
-    forecast_data = dark_sky_service.get_forecast
-    Forecast.new(location, forecast_data)
+    Rails.cache.fetch("forecast/#{location}", expires_in: 1.hour) do
+      forecast_data = dark_sky_service.get_forecast
+      Forecast.new(location, forecast_data)
+    end
   end
 
   private
