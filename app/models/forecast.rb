@@ -7,9 +7,9 @@ class Forecast
               :daily_forecasts,
               :id
 
-  def initialize(coordinate_query, forecast_data)
-    @location = coordinate_query.location_name
-    @country = coordinate_query.country
+  def initialize(location, forecast_data)
+    @location = location.location_name
+    @country = location.country
     @time = Time.at(forecast_data[:currently][:time])
     @current_weather = current_weather_info(forecast_data)
     @hourly_forecasts = hourly_data(forecast_data[:hourly])

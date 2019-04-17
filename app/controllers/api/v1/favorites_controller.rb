@@ -1,7 +1,7 @@
 class Api::V1::FavoritesController < ApplicationController
   def index
     if user
-      render json: LocationSerializer.new(user.coordinate_queries)
+      render json: LocationSerializer.new(user.locations)
     else
       four_oh_one
     end
@@ -9,7 +9,7 @@ class Api::V1::FavoritesController < ApplicationController
 
   def create
     if user
-      UserCoordinateQuery.create(user: user, coordinate_query: cq)
+      UserLocation.create(user: user, location: location)
       render json: {}, status: 201
     else
       four_oh_one
@@ -18,9 +18,9 @@ class Api::V1::FavoritesController < ApplicationController
 
   def destroy
     if user
-      ucq = UserCoordinateQuery.find_by(user: user, coordinate_query: cq)
-      ucq.destroy
-      render json: LocationSerializer.new(cq)
+      user_location = UserLocation.find_by(user: user, location: location)
+      user_location.destroy
+      render json: LocationSerializer.new(location)
     else
       four_oh_one
     end
@@ -28,8 +28,8 @@ class Api::V1::FavoritesController < ApplicationController
 
   private
 
-  def cq
-    @cq ||= CoordinateQuery.find_by(location_name: favorite_params[:location])
+  def location
+    @location ||= Location.find_by(location_name: favorite_params[:location])
   end
 
   def user

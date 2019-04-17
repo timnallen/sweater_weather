@@ -1,6 +1,6 @@
 class DarkSkyService < ApplicationService
-  def initialize(coordinate_query)
-    @coordinate_query = coordinate_query
+  def initialize(location)
+    @location = location
     @domain_name = 'https://api.darksky.net'
   end
 
@@ -10,14 +10,14 @@ class DarkSkyService < ApplicationService
 
   private
 
-  attr_reader :coordinate_query
+  attr_reader :location
 
   def request_formatter
-    if coordinate_query.class == CoordinateQuery
-      "#{coordinate_query.latitude},#{coordinate_query.longitude}"
+    if location.class == Location
+      "#{location.latitude},#{location.longitude}"
     else
-      lat = coordinate_query[:data][:attributes][:lat]
-      long = coordinate_query[:data][:attributes][:long]
+      lat = location[:data][:attributes][:lat]
+      long = location[:data][:attributes][:long]
       "#{lat},#{long}"
     end
   end

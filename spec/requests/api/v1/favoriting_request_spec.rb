@@ -8,18 +8,18 @@ describe 'user can favorite' do
       password_confirmation: '1',
       api_key: 'api_key'
     )
-    @cq = CoordinateQuery.create(
-      query: 'Denver, CO',
+    @cq = Location.create(
+      search_location: 'Denver, CO',
       location_name: 'Denver, CO',
       latitude: 39.7,
       longitude: 104.9
     )
-    UserCoordinateQuery.create(user: @user, coordinate_query: @cq)
+    UserLocation.create(user: @user, location: @cq)
   end
 
   it 'allows a user to select a favorite' do
-    cq_1 = CoordinateQuery.create(
-      query: 'Fort Collins, CO',
+    cq_1 = Location.create(
+      search_location: 'Fort Collins, CO',
       location_name: 'Fort Collins, CO',
       latitude: 40.5,
       longitude: 105.1
@@ -30,13 +30,13 @@ describe 'user can favorite' do
     }
     post '/api/v1/favorites', params: body
 
-    ucq = UserCoordinateQuery.last
+    ucq = UserLocation.last
 
     expect(response).to be_successful
     expect(response.code).to eq('201')
 
     expect(ucq.user).to eq(@user)
-    expect(ucq.coordinate_query).to eq(cq_1)
+    expect(ucq.location).to eq(cq_1)
   end
 
   it 'wont allow a favorite with a bad api_key' do
@@ -88,7 +88,7 @@ describe 'user can favorite' do
     expect(response_body).to be_a(Hash)
     expect(response_body[:attributes].keys).to eq([:location, :current_weather])
 
-    expect(@user.coordinate_queries).to_not include(@cq)
+    expect(@user.locations).to_not include(@cq)
   end
 
   it 'doesnt allow users to delete without an api key' do
