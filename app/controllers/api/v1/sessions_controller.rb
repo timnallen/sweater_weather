@@ -7,7 +7,7 @@ class Api::V1::SessionsController < ApplicationController
         api_key: user.api_key
       }
     else
-      render json: {}, status: 401
+      four_oh_one
     end
   end
 
